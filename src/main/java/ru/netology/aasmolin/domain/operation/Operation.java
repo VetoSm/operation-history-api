@@ -1,4 +1,4 @@
-package ru.netology.aasmolin.domain;
+package ru.netology.aasmolin.domain.operation;
 
 import lombok.Getter;
 import lombok.Setter;
