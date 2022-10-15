@@ -1,9 +1,8 @@
-package ru.netology.aasmolin.domain;
+package ru.netology.aasmolin.domain.operation;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 @Getter
 @Setter
 public class CashbackOperation extends Operation{

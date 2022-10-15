@@ -2,6 +2,8 @@ package ru.netology.aasmolin.domain;
 
 import lombok.*;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,4 +17,5 @@ public class Customer implements ConsolePrintable {
     public void printToConsole() {
         System.out.println(id + name);
     }
+
 }
