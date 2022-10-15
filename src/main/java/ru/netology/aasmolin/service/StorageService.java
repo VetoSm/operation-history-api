@@ -3,24 +3,30 @@ package ru.netology.aasmolin.service;
 import ru.netology.aasmolin.domain.Customer;
 import ru.netology.aasmolin.domain.operation.Operation;
 
-public class StorageService {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    public static final int OPERATION_PER_CUSTOMER = 100;
-    public static final int MAX_CUSTOMER = 10;
+public class StorageService <T> {
 
-    private final Customer[] customers = new Customer[MAX_CUSTOMER];
-    private final Operation[] operations = new Operation[MAX_CUSTOMER * OPERATION_PER_CUSTOMER];
-    private final int[][] statement = new int[MAX_CUSTOMER][OPERATION_PER_CUSTOMER];
+    private final List<T> storage = new ArrayList<>();
 
-    public Customer[] getCustomers() {
-        return customers;
+
+    public void setElement (T element){
+        storage.add(element);
     }
 
-    public Operation[] getOperations() {
-        return operations;
+    public T getElement(int position){
+        return storage.get(position);
     }
 
-    public int[][] getStatement() {
-        return statement;
+    public int getLength(){
+        return storage.size();
     }
+
+    public String toString(){
+        return storage.toString();
+    }
+
+
 }

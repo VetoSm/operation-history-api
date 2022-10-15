@@ -6,24 +6,21 @@ import ru.netology.aasmolin.domain.operation.Operation;
 import ru.netology.aasmolin.exception.CurrencyUnknowException;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Scanner;
 
-import static ru.netology.aasmolin.service.StorageService.MAX_CUSTOMER;
-import static ru.netology.aasmolin.service.StorageService.OPERATION_PER_CUSTOMER;
 import static ru.netology.aasmolin.utils.Constants.YES;
 
 @AllArgsConstructor
 public class OperationService {
 
     private final StatmentService statmentService;
-    private final StorageService storageService;
+    private final StorageService<Operation> operationStorageService;
 
     private final IOService ioService;
 
     public void fillOperations(IOService ioService) {
-        for (int operationId = 0; operationId < storageService.getOperations().length; operationId++) {
+        for (int operationId = 0; operationId < operationStorageService.getLength(); operationId++) {
 
+            System.out.println("Customer ID: ");
             int customerId = Integer.parseInt(ioService.getNextInput());
             if (!statmentService.isCustomerCanStoreNextOperation(customerId)) {
                 System.out.println("Operation for customers is not allowed: " + customerId);
@@ -46,11 +43,11 @@ public class OperationService {
             System.out.println("Введите место совершения операции: ");
             String merchant = ioService.getNextInput();
             LocalDateTime time = LocalDateTime.now();
-            System.out.println("Customer ID: ");
+
 
             Operation operation = new Operation(id_operation, summ_operation,
                     operationType, codeISO, merchant, time);
-            storageService.getOperations()[operationId] = operation;
+            operationStorageService.setElement(operation);
             statmentService.saveOperationToStatment(customerId, operationId);
 
             System.out.println("Хотите оставновить: " + YES + "/N");
@@ -66,7 +63,7 @@ public class OperationService {
     }
 
     public String getOperations() {
-        return Arrays.toString(storageService.getOperations());
+        return operationStorageService.toString();
     }
 
 

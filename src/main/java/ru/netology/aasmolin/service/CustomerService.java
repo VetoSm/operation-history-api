@@ -5,20 +5,19 @@ import ru.netology.aasmolin.domain.Customer;
 
 import java.util.Scanner;
 
-import static ru.netology.aasmolin.service.StorageService.MAX_CUSTOMER;
 import static ru.netology.aasmolin.utils.Constants.YES;
 
 @AllArgsConstructor
 public class CustomerService {
 
-    private final StorageService storageService;
+    private final StorageService<Customer> customerStorageService;
     private final IOService ioService;
     public void fillCustomers(IOService ioService) {
-        for (int j = 0; j < storageService.getCustomers().length; j++){
+        for (int j = 0; j < customerStorageService.getLength(); j++){
             System.out.println("Введите имя Клиента: ");
             String name = ioService.getNextInput();
             Customer customer = new Customer(j, name);
-            storageService.getCustomers()[j] = customer;
+            customerStorageService.setElement(customer);
 
             System.out.println("Хотите оставновить: " + YES + "/N");
             String answer = ioService.getNextInput();
