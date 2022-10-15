@@ -1,36 +1,22 @@
 package ru.netology.aasmolin.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 import ru.netology.aasmolin.domain.Customer;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
-import static ru.netology.aasmolin.utils.Constants.YES;
 
+@Component
 @AllArgsConstructor
 public class CustomerService {
 
-    private final StorageService<Customer> customerStorageService;
-    private final IOService ioService;
-    public void fillCustomers(IOService ioService) {
-        for (int j = 0; j < customerStorageService.getLength(); j++){
-            System.out.println("Введите имя Клиента: ");
-            String name = ioService.getNextInput();
-            Customer customer = new Customer(j, name);
-            customerStorageService.setElement(customer);
+    private final List<Customer> storage = new ArrayList<>();
 
-            System.out.println("Хотите оставновить: " + YES + "/N");
-            String answer = ioService.getNextInput();
-
-
-            if (answer.equals(YES)){
-                break;
-            } else {
-                continue;
-            }
-
-        }
-
+    public void addCustomer(int id, String name){
+        Customer customer = new Customer(id, name);
+        storage.add(customer);
     }
 
 }

@@ -1,30 +1,32 @@
 package ru.netology.aasmolin.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+import ru.netology.aasmolin.domain.operation.Operation;
 
 
-import static ru.netology.aasmolin.utils.Constants.MAX_CUSTOMER;
-import static ru.netology.aasmolin.utils.Constants.OPERATION_PER_CUSTOMER;
+import java.util.*;
 
+@Component
 @AllArgsConstructor
 public class StatmentService {
 
-    private static final int[] nextOparetionId = new int[MAX_CUSTOMER];
+    private final Map<Integer, List<Operation>> storage = new HashMap<>();
 
-
-    public void saveOperationToStatment(int customerId, int operationId){
-        int customerNextOperationId = findCustomerNextOperationId(customerId);
-        StatmentStorageService.getStatement()[customerId][customerNextOperationId] = operationId;
-        nextOparetionId[customerId] = nextOparetionId[customerId] + 1;
+    public void saveOperation(Operation operation){
+        List<Operation> operations = storage.get(operation.getCustomerId());
+        if (operations == null){
+            List<Operation> customerOperation = new ArrayList<>();
+            customerOperation.add(operation);
+            storage.put(operation.getCustomerId(), customerOperation);
+        } else {
+            operations.add(operation);
+        }
 
     }
-    public boolean isCustomerCanStoreNextOperation(int customerId) {
-        return nextOparetionId[customerId] != OPERATION_PER_CUSTOMER;
 
-    }
-
-    private int findCustomerNextOperationId(int customerId) {
-        return nextOparetionId[customerId];
+    public String getOperations(){
+        return storage.toString();
     }
 
 }
